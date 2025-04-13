@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrewAura - Artisanal Coffee Experience</title>
+
+  <link rel="stylesheet" href="about.css"> <!-- Link to your about.CSS file -->
+
+  <link rel="stylesheet" href="menu.css">
+
+
+
+
+
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="about.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Font style navbar -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            floatUp: 'floatUp 10s ease-in-out infinite alternate',
+            gradientShift: 'gradientShift 30s ease-in-out infinite',
+            shimmerMove: 'shimmerMove 30s linear infinite',
+            pulse: 'pulse 1.2s ease-out infinite',
+            breathe: 'breathe 3s ease-in-out infinite',
+            rise: 'rise 6s ease-in-out infinite',
+            beanFloat: 'beanFloat 8s ease-in-out infinite',
+            swirlIn: 'swirlIn 1.2s ease-out forwards',
+            slideUp: 'slideUp 0.8s ease-out forwards',
+            fadeIn: 'fadeIn 1s ease-out forwards',
+            bounce: 'bounce 2s infinite'
+          },
+          keyframes: {
+            floatUp: {
+              '0%': { transform: 'translateX(-50%) translateY(0)' },
+              '100%': { transform: 'translateX(-50%) translateY(-3px)' },
+            },
+
+            gradientShift: {
+              '0%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+              '100%': { backgroundPosition: '0% 50%' },
+            },
+            shimmerMove: {
+              '0%': { transform: 'translate(0, 0)' },
+              '100%': { transform: 'translate(100px, 100px)' },
+            },
+            pulse: {
+              '0%': { transform: 'scale(0.9)', opacity: '0.6' },
+              '100%': { transform: 'scale(1.4)', opacity: '0' },
+            },
+            breathe: {
+              '0%, 100%': {
+                transform: 'translateX(-50%) scale(1)',
+                opacity: '1',
+                boxShadow: '0 0 0px rgba(255, 200, 160, 0.0)',
+              },
+              '50%': {
+                transform: 'translateX(-50%) scale(1.015)',
+                opacity: '0.9',
+                boxShadow: '0 0 12px rgba(255, 200, 160, 0.35)',
+              },
+            },
+            rise: {
+              '0%': { transform: 'translateY(0) scale(1)', opacity: '0.7' },
+              '30%': { transform: 'translateY(-40px) scale(1.1)', opacity: '0.9' },
+              '60%': { transform: 'translateY(-80px) scale(1.15)', opacity: '0.6' },
+              '100%': { transform: 'translateY(-120px) scale(1.25)', opacity: '0' },
+            },
+            beanFloat: {
+              '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+              '50%': { transform: 'translateY(-20px) rotate(5deg)' },
+            },
+            swirlIn: {
+              '0%': { transform: 'rotate(-180deg) scale(0.5)', opacity: '0' },
+              '100%': { transform: 'rotate(0deg) scale(1)', opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(30px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            bounce: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' },
+            }
+          },
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+            playfair: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            coffee: {
+              light: '#FFF8F0',
+              medium: '#FFD07B',
+              dark: '#4b2e2e',
+              accent: '#FF8C42',
+              deep: '#1A0F08',
+              cream: '#FFF2E1'
+            }
+          }
+        },
+      },
+    };
+  </script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0.3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(to right, #ffd3ba, #fff2e1, #ffb997);
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 8px rgba(255, 209, 183, 0.3);
+      z-index: 0;
+    }
+
+    .nav-link:hover::before {
+      width: 100%;
+    }
+
+    .steam {
+      position: absolute;
+      bottom: 0;
+      width: 24px;
+      height: 100px;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.05) 80%);
+      border-radius: 50%;
+      opacity: 0.5;
+      filter: blur(12px);
+      transform-origin: bottom center;
+      animation: rise var(--duration, 7s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+
+    /* Rise naturally with subtle drift + rotation */
+    @keyframes rise {
+      0% {
+        transform: translateY(0px) translateX(0) rotate(0deg) scale(0.9);
+        opacity: 0.3;
+      }
+
+      25% {
+        transform: translateY(-40px) translateX(calc(var(--x))) rotate(calc(var(--r))) scale(1.0);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: translateY(-80px) translateX(calc(var(--x))) rotate(calc(var(--r))) scale(1.1);
+        opacity: 0.4;
+      }
+
+      100% {
+        transform: translateY(-160px) translateX(calc(var(--x))) rotate(calc(var(--r))) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+
+
+
+
+
+
+    /* Hide steam when rotating */
+    #steam-container.hidden {
+      display: none;
+    }
+
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+      }
+
+      30% {
+        transform: translateY(-40px) scale(1.1);
+        opacity: 0.9;
+      }
+
+      60% {
+        transform: translateY(-80px) scale(1.15);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-120px) scale(1.25);
+        opacity: 0;
+      }
+    }
+
+    .coffee-bean {
+      position: absolute;
+      width: 30px;
+      height: 20px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20"><path d="M25,10 C25,15 20,20 15,20 C10,20 5,15 5,10 C5,5 10,0 15,0 C20,0 25,5 25,10 Z" fill="%234b2e2e"/></svg>') no-repeat;
+      opacity: 0.7;
+      animation: beanFloat 8s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .floating-element {
+      will-change: transform;
+      transition: transform 0.3s ease-out;
+    }
+
+    .floating-element:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+
+
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1);
+      }
+
+      14% {
+        transform: scale(1.06);
+      }
+
+      28% {
+        transform: scale(1);
+      }
+
+      42% {
+        transform: scale(1.04);
+      }
+
+      70% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .heartbeat-animation {
+      animation: heartbeat 1.8s ease-in-out infinite;
+      will-change: transform;
+
+    }
+
+
+
+
+    @keyframes fade-up {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+  </style>
+</head>
+
+<body class="m-0 p-0 font-poppins bg-coffee-light text-coffee-deep scroll-smooth">
+
+
+
+
+  <nav id="morphingNavbar" class="fixed top-4 left-1/2 -translate-x-1/2 px-6 py-2 sm:py-2.5 rounded-full
+bg-white/60 backdrop-blur-md border border-white/30
+shadow-[0_2px_12px_rgba(0,0,0,0.05)]
+flex items-center justify-between gap-6 z-[100]
+max-w-[92vw] sm:max-w-[86%] lg:max-w-[72%]
+animate-[fadeUpSoft_0.8s_ease-out_forwards] opacity-0
+transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:shadow-[0_6px_24px_rgba(0,0,0,0.08)]">
+    <!-- Navbar content like logo, links, etc. -->
+
+
+
+
+
+    <!-- Logo -->
+    <div
+      class="text-2xl sm:text-3xl font-montserrat font-bold text-[#4a2e1e] tracking-wide drop-shadow-[0_2px_6px_rgba(255,210,185,0.3)]">
+      BrewAura
+    </div>
+
+    <!-- Nav Links -->
+    <ul class="hidden md:flex flex-wrap justify-center gap-3 sm:gap-5">
+      <li>
+        <a href="#home" class="relative text-[#4a2e1e] font-medium text-sm sm:text-base px-4 py-2 rounded-full 
+           border border-[#f6c9aa] bg-white/10 backdrop-blur-[8px] 
+           transition-all duration-300 overflow-hidden 
+           hover:scale-105 hover:text-white 
+           hover:shadow-[0_4px_18px_rgba(255,200,160,0.4)] nav-link">
+          <span class="relative z-10">Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="#coffee-story" class="relative text-[#4a2e1e] font-medium text-sm sm:text-base px-4 py-2 rounded-full 
+           border border-[#f6c9aa] bg-white/10 backdrop-blur-[8px] 
+           transition-all duration-300 overflow-hidden 
+           hover:scale-105 hover:text-white 
+           hover:shadow-[0_4px_18px_rgba(255,200,160,0.4)] nav-link">
+          <span class="relative z-10">About</span>
+        </a>
+      </li>
+      <li>
+        <a href="#menu-page" class="relative text-[#4a2e1e] font-medium text-sm sm:text-base px-4 py-2 rounded-full 
+           border border-[#f6c9aa] bg-white/10 backdrop-blur-[8px] 
+           transition-all duration-300 overflow-hidden 
+           hover:scale-105 hover:text-white 
+           hover:shadow-[0_4px_18px_rgba(255,200,160,0.4)] nav-link">
+          <span class="relative z-10">Menu</span>
+        </a>
+      </li>
+      <li>
+        <a href="reserve.html" class="relative text-[#4a2e1e] font-medium text-sm sm:text-base px-4 py-2 rounded-full 
+           border border-[#f6c9aa] bg-white/10 backdrop-blur-[8px] 
+           transition-all duration-300 overflow-hidden 
+           hover:scale-105 hover:text-white 
+           hover:shadow-[0_4px_18px_rgba(255,200,160,0.4)] nav-link">
+          <span class="relative z-10">Reserve</span>
+        </a>
+      </li>
+    </ul>
+
+
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuButton" class="md:hidden text-[#ffe8d6] p-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </nav>
+
+
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobileMenu" class="fixed inset-0 bg-[#1b110f]/95 backdrop-blur-md z-50 flex flex-col items-center justify-center gap-8 p-6 
+         opacity-0 pointer-events-none transition-all duration-300">
+
+    <!-- Close Button -->
+    <button id="closeMobileMenu" class="absolute top-6 right-6 text-[#ffe8d6] p-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+
+    <a href="#home" class="text-2xl text-[#ffe8d6] font-open-sans font-medium px-6 py-2 border border-[#ffd2b7] rounded-full
+bg-white/10 backdrop-blur-[8px] hover:text-white 
+hover:shadow-[0_0_20px_rgba(255,200,160,0.4)] transition-all duration-300 hover:scale-105">
+      Home
+    </a>
+
+    <a href="#coffee-story" class="text-2xl text-[#ffe8d6] font-open-sans font-medium px-6 py-2 border border-[#ffd2b7] rounded-full
+    bg-white/10 backdrop-blur-[8px] hover:text-white 
+hover:shadow-[0_0_20px_rgba(255,200,160,0.4)] transition-all duration-300 hover:scale-105">
+      About
+    </a>
+
+    <a href="#menu-page" class="text-2xl text-[#ffe8d6] font-open-sans font-medium px-6 py-2 border border-[#ffd2b7] rounded-full 
+   bg-white/10 backdrop-blur-[8px] hover:text-white 
+   hover:shadow-[0_0_20px_rgba(255,200,160,0.4)] transition-all duration-300 hover:scale-105">
+      Menu
+    </a>
+    <a href="reserve.html" class="text-2xl text-[#ffe8d6] font-open-sans font-medium px-6 py-2 border border-[#ffd2b7] rounded-full 
+     bg-white/10 backdrop-blur-[8px] hover:text-white 
+     hover:shadow-[0_0_20px_rgba(255,200,160,0.4)] transition-all duration-300 hover:scale-105">
+      Reserve
+    </a>
+  </div>
+
+
+
+  </nav>
+
+  </ul>
+
+
+  <!-- Hero Section -->
+  <section id="home"
+    class="min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 relative overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.15)] bg-[length:400%_400%] animate-gradientShift bg-[linear-gradient(120deg,#FFEAD2,#FF6F3C,#FFA142,#FFD07B,#FF9442,#FF8C42)]">
+
+
+
+    <!-- Shimmer Effect -->
+    <div
+      class="absolute w-[200%] h-[200%] top-[-50%] left-[-50%] bg-[repeating-radial-gradient(circle_at_10%_10%,rgba(255,255,255,0.04),rgba(255,255,255,0.01)_3px,transparent_6px)] mix-blend-overlay animate-shimmerMove opacity-[0.15] pointer-events-none z-[3]">
+    </div>
+
+    <!-- Hero Content -->
+    <div
+      class="flex flex-col-reverse lg:flex-row justify-between items-center w-full max-w-[1200px] gap-10 relative z-[5]">
+      <!-- Text Content -->
+
+
+      <div class="w-full lg:w-1/2 text-center lg:text-left px-4 md:mt-12 lg:mt-14">
+
+
+
+        <h1 id="hero-title" class="text-4xl sm:text-5xl md:text-6xl font-bold text-[#4b2e2e] mb-6">
+          <span class="block font-montserrat">Artisanal Coffee</span>
+          <span class="block font-montserrat text-coffee-dark">Crafted with Passion</span>
+        </h1>
+        <p id="hero-description" class="text-lg font-open-sans sm:text-xl text-coffee-dark/80 my-6 max-w-[600px] mx-auto lg:mx-0">
+          Experience the perfect blend of tradition and innovation in every cup. Our beans are ethically sourced and
+          roasted to perfection.
+        </p>
+
+        <div  class="flex flex-wrap justify-center lg:justify-start gap-4 mt-6">
+          <a id="explore-button" href="#menu"
+            class="relative px-7 py-4 rounded-full border border-[#d6bfa8]/20 bg-[#4B2E2E] text-[#FDF4EF] font-open-sans font-medium text-base shadow-[0_6px_18px_rgba(75,46,46,0.2)] transition-all duration-300 group overflow-hidden hover:shadow-[0_10px_28px_rgba(75,46,46,0.3)] hover:scale-105">
+
+            <span class="relative z-10">Explore Menu</span>
+
+            <span
+              class="absolute inset-0 bg-gradient-to-r from-[#F3E1D2]/80 to-[#EAD0B4]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full mix-blend-overlay"></span>
+          </a>
+
+          <a id="visit-button" href="#about"
+            class="px-7 py-4 rounded-full border-2 border-coffee-dark text-coffee-dark font-open-sans font-medium text-base transition-all duration-300 hover:bg-coffee-dark/5 hover:scale-105">Visit
+            Us</a>
+        </div>
+
+
+
+        <div class="mt-10 hidden md:block">
+          <div class="flex gap-6 items-center">
+
+            <div class="flex -space-x-4">
+              <div class="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                  alt="Customer" class="w-full h-full object-cover" />
+              </div>
+              <div class="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                  alt="Customer" class="w-full h-full object-cover" />
+              </div>
+              <div class="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                  alt="Customer" class="w-full h-full object-cover" />
+              </div>
+            </div>
+
+
+            <div class="text-sm text-coffee-dark/90">
+              <p class="font-medium">Loved by 5,000+ coffee enthusiasts</p>
+              <div class="flex items-center mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-coffee-accent" viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-coffee-accent" viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-coffee-accent" viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-coffee-accent" viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-coffee-accent" viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <span class="ml-1">4.9/5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- Coffee Cup Container -->
+      <div id="coffee-container" class="relative w-full lg:w-1/2 flex justify-center items-center pt-8">
+        <!-- Glowing Circle Behind Cup -->
+        <div class="absolute w-[280px] h-[280px] bg-coffee-cream/20 rounded-full blur-xl"></div>
+
+        <!-- Steam Container -->
+        <div id="steam-container"
+          class="absolute bottom-[280px] left-1/2 -translate-x-1/2 z-40 w-[160px] h-[180px] overflow-visible pointer-events-none">
+
+          <div class="steam" style="left: 20px; --delay: 0s;    --duration: 7s; --x: -2px; --r: 2deg;"></div>
+          <div class="steam" style="left: 50px; --delay: 1.4s;  --duration: 7.6s; --x: 3px;  --r: -3deg;"></div>
+          <div class="steam" style="left: 85px; --delay: 2.1s;  --duration: 6.8s; --x: -1px; --r: 1deg;"></div>
+          <div class="steam" style="left: 115px;--delay: 0.8s;  --duration: 7.3s; --x: 2px;  --r: -2deg;"></div>
+
+        </div>
+
+
+        <!-- Coffee Cup Model -->
+        <model-viewer id="coffee-cup" src="models/cup_of_cappuccino.glb" alt="A 3D model of a coffee cup" auto-rotate
+          reveal="auto" camera-controls disable-pan disable-zoom interaction-prompt="none" shadow-intensity="1"
+          shadow-softness="1" exposure="0.95" environment-image="neutral" camera-orbit="0deg 55deg 0.65m"
+          min-camera-orbit="auto 30deg auto" max-camera-orbit="auto 88deg auto" field-of-view="25deg" loading="eager"
+          class="model-viewer-entry"
+          style="width: 400px; height: 400px; background-color: transparent; transform: scale(0.95); opacity: 0; transition: opacity 1.2s ease-out, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: 0.2s;">
+        </model-viewer>
+
+
+      </div>
+    </div>
+
+  </section>
+
+
+
+  <div class="bg-coffee-cream w-full h-[20px]"></div>
+
+  <!-- About Us   -->
+
+  <main id="coffee-story">
+    <!-- Background Elements -->
+    <div class="bg-gradient"></div>
+    <div class="bg-pattern"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Story Header -->
+    <header class="story-header">
+      <h1 class="story-title">Our Coffee Story</h1>
+      <p class="story-subtitle">From bean to brew, discover the passion and craftsmanship behind every cup of BrewAura
+        coffee. Our journey is about more than just coffee—it's about community, sustainability, and the perfect cup.
+      </p>
+      <div class="scroll-prompt">
+        <span class="scroll-text">Scroll to Explore</span>
+        <div class="scroll-icon"></div>
+      </div>
+    </header>
+
+    <!-- Timeline Section -->
+    <section class="coffee-timeline">
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+
+        <!-- Milestone 1 -->
+        <div class="timeline-milestone milestone-odd">
+          <div class="milestone-content">
+            <div class="milestone-year">2010</div>
+            <h3 class="milestone-title">Our Humble Beginnings</h3>
+            <p class="milestone-text">BrewAura began as a small cart in the corner of a local farmers market. Founder
+              Emma Chen, dissatisfied with corporate life, decided to pursue her passion for coffee and share it with
+              others.</p>
+            <p class="milestone-text">Using a single-origin bean from Colombia and a portable espresso machine, Emma
+              served her first customers with a smile and a commitment to quality that would become the foundation of
+              our brand.</p>
+          </div>
+          <div class="milestone-dot"></div>
+          <div class="milestone-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+              alt="BrewAura humble beginnings" class="milestone-image">
+          </div>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="timeline-milestone milestone-even">
+          <div class="milestone-content">
+            <div class="milestone-year">2013</div>
+            <h3 class="milestone-title">First Brick & Mortar</h3>
+            <p class="milestone-text">After three years of growth and a loyal following, BrewAura opened its first
+              permanent location in a historic building downtown. The café quickly became known for its warm atmosphere
+              and expertly crafted beverages.</p>
+            <p class="milestone-text">This milestone marked our expansion into food offerings, with locally sourced
+              pastries and a small breakfast menu that complemented our signature coffee drinks.</p>
+          </div>
+          <div class="milestone-dot"></div>
+          <div class="milestone-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+              alt="First BrewAura café" class="milestone-image">
+          </div>
+        </div>
+
+        <!-- Milestone 3 -->
+        <div class="timeline-milestone milestone-odd">
+          <div class="milestone-content">
+            <div class="milestone-year">2016</div>
+            <h3 class="milestone-title">Direct Trade Partnerships</h3>
+            <p class="milestone-text">Committed to sustainability and ethical sourcing, we established direct
+              relationships with coffee farmers in Colombia, Ethiopia, and Guatemala. These partnerships ensure fair
+              compensation and environmentally responsible farming practices.</p>
+            <p class="milestone-text">Emma and our head roaster began traveling annually to visit our partner farms,
+              deepening our understanding of the craft and bringing back new techniques and varietals to share with our
+              customers.</p>
+          </div>
+          <div class="milestone-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1544233726-9f1d2b27be8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+              alt="Coffee farm partnership" class="milestone-image">
+          </div>
+        </div>
+
+        <!-- Milestone 4 -->
+        <div class="timeline-milestone milestone-even">
+          <div class="milestone-content">
+            <div class="milestone-year">2019</div>
+            <h3 class="milestone-title">In-House Roastery</h3>
+            <p class="milestone-text">A significant leap forward came with the opening of our own roastery, allowing
+              complete control over the coffee development process. This facility enabled us to experiment with
+              different roast profiles and processing methods.</p>
+            <p class="milestone-text">The roastery also opened its doors to the public for tours and tasting sessions,
+              creating an educational space where coffee enthusiasts could deepen their appreciation for the craft.</p>
+          </div>
+          <div class="milestone-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+              alt="BrewAura roastery" class="milestone-image">
+          </div>
+        </div>
+
+        <!-- Milestone 5 -->
+        <div class="timeline-milestone milestone-odd">
+          <div class="milestone-content">
+            <div class="milestone-year">2023</div>
+            <h3 class="milestone-title">Today & Beyond</h3>
+            <p class="milestone-text">BrewAura has grown to five locations across the city, each with its unique
+              character but united by our commitment to extraordinary coffee experiences. Our team has expanded to
+              include baristas, roasters, and educators who share our passion.</p>
+            <p class="milestone-text">Looking ahead, we're focused on expanding our sustainability initiatives,
+              continuing to innovate our offerings, and creating more opportunities to connect with our community over
+              the perfect cup of coffee.</p>
+          </div>
+          <div class="milestone-dot"></div>
+          <div class="milestone-image-container">
+            <img
+              src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+              alt="BrewAura today" class="milestone-image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="brewing-process">
+      <div class="process-container">
+        <div class="process-header">
+          <h2 class="process-title">Our Brewing Process</h2>
+          <p class="process-subtitle">The journey from bean to cup is a meticulous one, guided by expertise and respect
+            for the craft. Here's how we create the perfect brew.</p>
+        </div>
+
+        <div class="process-stages">
+          <!-- Stage 1 -->
+          <div class="process-stage" data-delay="0">
+            <div class="stage-icon-container">
+              <svg class="stage-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z" />
+              </svg>
+              <div class="stage-number">1</div>
+            </div>
+            <h4 class="stage-title">Bean Selection</h4>
+            <p class="stage-description">We carefully select beans from our partner farms, focusing on seasonality and
+              peak flavor profiles.</p>
+          </div>
+
+          <!-- Stage 2 -->
+          <div class="process-stage" data-delay="100">
+            <div class="stage-icon-container">
+              <svg class="stage-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z" />
+                <path d="M12 10.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z" />
+              </svg>
+              <div class="stage-number">2</div>
+            </div>
+            <h4 class="stage-title">Small-Batch Roasting</h4>
+            <p class="stage-description">Each batch is roasted to perfection, bringing out the unique characteristics of
+              the origin.</p>
+          </div>
+
+          <!-- Stage 3 -->
+          <div class="process-stage" data-delay="200">
+            <div class="stage-icon-container">
+              <svg class="stage-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M18.5 3H6c-1.1 0-2 .9-2 2v5.71c0 3.83 2.95 7.18 6.78 7.29 3.96.12 7.22-3.06 7.22-7v-1h.5c1.93 0 3.5-1.57 3.5-3.5S20.43 3 18.5 3zM16 10h-3V5h3v5zm0 2v1c0 1.65-1.35 3-3 3s-3-1.35-3-3v-1h6z" />
+              </svg>
+              <div class="stage-number">3</div>
+            </div>
+            <h4 class="stage-title">Precision Grinding</h4>
+            <p class="stage-description">Beans are ground to the exact coarseness required for each brewing method
+              moments before use.</p>
+          </div>
+
+          <!-- Stage 4 -->
+          <div class="process-stage" data-delay="300">
+            <div class="stage-icon-container">
+              <svg class="stage-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M18 4h-2v7.9c0 2.3-1.8 4.1-4 4.1s-4-1.8-4-4.1V4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" />
+                <path d="M4 8h2v6H4z" />
+                <path d="M18 8h2v6h-2z" />
+              </svg>
+              <div class="stage-number">4</div>
+            </div>
+            <h4 class="stage-title">Artful Brewing</h4>
+            <p class="stage-description">Our baristas use precise techniques, controlling water temperature and
+              extraction time for optimal flavor.</p>
+          </div>
+
+          <!-- Stage 5 -->
+          <div class="process-stage" data-delay="400">
+            <div class="stage-icon-container">
+              <svg class="stage-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z" />
+              </svg>
+              <div class="stage-number">5</div>
+            </div>
+            <h4 class="stage-title">Serving Experience</h4>
+            <p class="stage-description">Each cup is presented with attention to detail, creating a moment of connection
+              and enjoyment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="coffee-testimonials">
+      <div class="testimonials-container">
+        <div class="testimonials-header">
+          <h2 class="testimonials-title">What Our Customers Say</h2>
+          <p class="testimonials-subtitle">The BrewAura experience through the words of our beloved community members.
+          </p>
+        </div>
+
+        <div class="testimonials-grid">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card" data-delay="0">
+            <div class="testimonial-content">
+              The attention to detail at BrewAura is unmatched. From the moment you walk in to the last sip of your
+              coffee, everything is thoughtfully crafted for the perfect experience. Their Ethiopian pour-over changed
+              my perception of what coffee could be.
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Sarah J.">
+              </div>
+              <div class="author-info">
+                <div class="author-name">Sarah J.</div>
+                <div class="author-title">Coffee Enthusiast</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="testimonial-card" data-delay="100">
+            <div class="testimonial-content">
+              As someone who works remotely, I've tried every café in the city. BrewAura has become my second office
+              because of their consistently excellent coffee, friendly staff, and the perfect ambiance for productivity.
+              It's my daily ritual.
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T.">
+              </div>
+              <div class="author-info">
+                <div class="author-name">Michael T.</div>
+                <div class="author-title">Software Developer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="testimonial-card" data-delay="200">
+            <div class="testimonial-content">
+              The educational events at BrewAura have deepened my appreciation for coffee. Learning about direct trade
+              from Emma herself and meeting some of the farmers has made me feel connected to the entire journey of my
+              morning cup.
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Leila R.">
+              </div>
+              <div class="author-info">
+                <div class="author-name">Leila R.</div>
+                <div class="author-title">Food Writer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="coffee-cta">
+      <div class="cta-bg-circles">
+        <div class="cta-circle cta-circle-1"></div>
+        <div class="cta-circle cta-circle-2"></div>
+        <div class="cta-circle cta-circle-3"></div>
+      </div>
+
+      <div class="cta-container">
+        <h2 class="cta-title">Join Our Coffee Journey</h2>
+        <p class="cta-text">Experience the BrewAura difference and become part of our story. Visit one of our locations
+          or join our coffee subscription for a curated selection delivered to your door.</p>
+        <a href="locations.html" class="cta-button">Find Us Today</a>
+      </div>
+    </section>
+  </main>
+
+
+
+  <!-- Menu Section -->
+
+  <div class="bg-coffee-cream w-full h-[20px]"></div>
+
+
+  <main id="menu-page">
+    <!-- Background Elements -->
+    <div class="bg-gradient"></div>
+    <div class="bg-pattern"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Menu Header -->
+    <header class="menu-header">
+      <h1 class="menu-title">Our Menu</h1>
+      <p class="menu-subtitle">Discover our carefully crafted selection of coffee, food, and pastries made with love and
+        the finest ingredients.</p>
+
+      <!-- Menu Navigation -->
+      <nav class="menu-nav">
+        <div class="menu-nav-item active" data-target="coffee">Coffee</div>
+        <div class="menu-nav-item" data-target="food">Food</div>
+        <div class="menu-nav-item" data-target="pastries">Pastries</div>
+        <div class="menu-nav-item" data-target="beans">Coffee Beans</div>
+      </nav>
+    </header>
+
+    <!-- Coffee Menu Section -->
+    <section id="coffee" class="menu-section active">
+      <!-- Espresso Based -->
+      <div class="menu-category">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M2,21V19H20V21H2M20,8V5H18V8H20M20,3A2,2 0 0,1 22,5V8A2,2 0 0,1 20,10H18V13A4,4 0 0,1 14,17H8A4,4 0 0,1 4,13V3H20M16,5H6V13A2,2 0 0,0 8,15H14A2,2 0 0,0 16,13V5Z" />
+            </svg>
+          </div>
+          <h2 class="category-title">Espresso Based</h2>
+        </div>
+
+        <div class="menu-items">
+          <!-- Item 1 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1541167760496-1628856ab772?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Espresso">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Classic Espresso</h3>
+              <p class="menu-item-description">Our signature espresso blend with notes of chocolate, caramel, and a
+                smooth finish.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$3.50</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Latte">
+              <div class="menu-item-badge">Popular</div>
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Vanilla Bean Latte</h3>
+              <p class="menu-item-description">Espresso with steamed milk and house-made vanilla bean syrup, topped with
+                a delicate microfoam.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$5.25</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1534687941688-651ccaafbff8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Cappuccino">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Classic Cappuccino</h3>
+              <p class="menu-item-description">Equal parts espresso, steamed milk, and milk foam, crafted to perfection.
+              </p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$4.75</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pour Over -->
+      <div class="menu-category">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M10,5V3H14V5H10M19,12C19,10.19 18.66,8.5 18.08,7H5.92C5.34,8.5 5,10.19 5,12C5,16.42 8.58,20 13,20C17.42,20 21,16.42 21,12M17,12C17,14.76 15.24,17 12.5,17C9.76,17 8,14.76 8,12C8,9.24 9.76,7 12.5,7C15.24,7 17,9.24 17,12Z" />
+            </svg>
+          </div>
+          <h2 class="category-title">Pour Over & Drip</h2>
+        </div>
+
+        <div class="menu-items">
+          <!-- Item 1 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Pour Over">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Ethiopian Yirgacheffe</h3>
+              <p class="menu-item-description">Hand-poured for optimal extraction, featuring bright citrus notes and a
+                floral aroma.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$5.50</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1521302080334-4bebac2763a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Chemex">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Chemex Brew</h3>
+              <p class="menu-item-description">Prepared in a Chemex for a clean, bright, and aromatic cup that
+                highlights the coffee's nuanced flavors.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$6.00</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.pexels.com/photos/6207297/pexels-photo-6207297.jpeg?auto=compress&cs=tinysrgb&w=1350"
+                alt="Cold Brew">
+              <div class="menu-item-badge">Seasonal</div>
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Signature Cold Brew</h3>
+              <p class="menu-item-description">Steeped for 18 hours, our cold brew offers a smooth, rich experience with
+                low acidity and a natural sweetness.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$5.75</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Food Menu Section -->
+    <section id="food" class="menu-section">
+      <!-- Breakfast -->
+      <div class="menu-category">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M3,3A1,1 0 0,0 2,4V8L2,9.5C2,11.19 3.03,12.63 4.5,13.22V19.5A1.5,1.5 0 0,0 6,21A1.5,1.5 0 0,0 7.5,19.5V13.22C8.97,12.63 10,11.19 10,9.5V8L10,4A1,1 0 0,0 9,3A1,1 0 0,0 8,4V8A0.5,0.5 0 0,1 7.5,8.5A0.5,0.5 0 0,1 7,8V4A1,1 0 0,0 6,3A1,1 0 0,0 5,4V8A0.5,0.5 0 0,1 4.5,8.5A0.5,0.5 0 0,1 4,8V4A1,1 0 0,0 3,3M19.88,3C19.75,3 19.62,3.09 19.5,3.16L16,5.25V9H12V11H13L14,21H20L21,11H22V9H18V6.34L20.5,4.84C21,4.56 21.13,4 20.84,3.5C20.63,3.14 20.26,2.95 19.88,3Z" />
+            </svg>
+          </div>
+          <h2 class="category-title">Breakfast</h2>
+        </div>
+
+        <div class="menu-items">
+          <!-- Item 1 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Avocado Toast">
+              <div class="menu-item-badge">Popular</div>
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Avocado Toast</h3>
+              <p class="menu-item-description">Sourdough toast topped with smashed avocado, cherry tomatoes,
+                microgreens, and a sprinkle of everything bagel seasoning.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$9.50</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1557079604-d28080618be0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Breakfast Bowl">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Ancient Grain Bowl</h3>
+              <p class="menu-item-description">Quinoa, farro, fresh berries, honey, toasted almonds, and Greek yogurt
+                drizzled with maple syrup.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$10.25</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1513442542250-854d436a73f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Egg Sandwich">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Egg & Cheddar Sandwich</h3>
+              <p class="menu-item-description">Farm-fresh eggs with aged cheddar, arugula, and house-made tomato jam on
+                a toasted brioche bun.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$8.75</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lunch -->
+      <div class="menu-category">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M3,3H21V7H3V3M3,9H21V12H3V9M3,14H21V17H3V14M3,19H21V22H3V19Z" />
+            </svg>
+          </div>
+          <h2 class="category-title">Lunch</h2>
+        </div>
+
+        <div class="menu-items">
+          <!-- Item 1 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1550507992-eb63ffee0847?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Chicken Sandwich">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Chicken Pesto Panini</h3>
+              <p class="menu-item-description">Grilled chicken breast, fresh mozzarella, roasted red peppers, and basil
+                pesto on ciabatta bread.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$12.50</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1547496502-affa22d38842?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Salad">
+              <div class="menu-item-badge">Vegan</div>
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Harvest Bowl</h3>
+              <p class="menu-item-description">Mixed greens, roasted sweet potatoes, spiced chickpeas, avocado, pickled
+                red onions, and tahini dressing.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$11.75</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1543352634-99a5d50ae78e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Soup">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Seasonal Soup</h3>
+              <p class="menu-item-description">Chef's daily creation made from scratch with seasonal ingredients. Served
+                with artisanal bread.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$7.50</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pastries Menu Section -->
+    <section id="pastries" class="menu-section">
+      <!-- Sweet Treats -->
+      <div class="menu-category">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M12,3C10.41,3 9.11,4.18 9,5.76C8.17,5.3 7.21,5 6.21,5C6.14,5 6.07,5 6,5.01C6,5.01 6,5.01 6,5.01C3.94,5.11 2.11,6.33 1.06,8.27C-0.7,11.5 0.09,15.91 4,19.61C7.91,23.31 12.37,23.95 15.65,22.06C18.08,20.62 20.12,18.06 20,15L20,14.99C19.97,14.08 19.69,13.23 19.22,12.5C20.43,11.64 21.23,10.2 21.23,8.58C21.23,5.55 18.79,3.12 15.76,3.12C14.96,3.12 14.21,3.31 13.54,3.64C13.16,3.23 12.61,3 12,3M12,5C12.57,5 13,5.43 13,6C13,6.57 12.57,7 12,7C11.43,7 11,6.57 11,6C11,5.43 11.43,5 12,5M15.76,5.12C17.67,5.12 19.23,6.67 19.23,8.58C19.23,10.5 17.67,12.04 15.76,12.04C13.85,12.04 12.3,10.5 12.3,8.58C12.3,6.67 13.85,5.12 15.76,5.12Z" />
+            </svg>
+          </div>
+          <h2 class="category-title">Sweet Treats</h2>
+        </div>
+
+        <div class="menu-items">
+          <!-- Item 1 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Croissant">
+              <div class="menu-item-badge">Fresh Daily</div>
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Butter Croissant</h3>
+              <p class="menu-item-description">Flaky, buttery layers baked to golden perfection. Made fresh every
+                morning.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$4.25</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1587314168485-3236d6710814?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Coffee Cake">
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Cinnamon Coffee Cake</h3>
+              <p class="menu-item-description">Moist vanilla cake with a cinnamon streusel swirl and crumbly topping.
+                Pairs perfectly with our coffee.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$5.50</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.unsplash.com/photo-1505253668822-42074d58a7c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Chocolate Chip Cookie">
+              <div class="menu-item-badge">Popular</div>
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Chocolate Chip Cookie</h3>
+              <p class="menu-item-description">Soft-baked with brown butter, dark chocolate chunks, and a touch of sea
+                salt.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$3.75</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Savory Pastries -->
+      <div class="menu-category">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M22 19L19 17L22 15V19M15 15L19 9L15 3L11 9L15 15M11 15L7 9L3 3L1 5L5 11L9 17L11 15Z" />
+            </svg>
+          </div>
+          <h2 class="category-title">Savory Pastries</h2>
+        </div>
+
+        <div class="menu-items">
+          <!-- Item 1 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://images.immediate.co.uk/production/volatile/sites/30/2022/09/Spinatquiche-mit-Feta-2-5a65830.jpg?quality=90&webp=true&resize=600,545"
+                alt="Spinach & Feta Quiche" className="w-full h-full object-cover" />
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Spinach & Feta Quiche</h3>
+              <p class="menu-item-description">Buttery pastry filled with spinach, feta cheese, and caramelized onions
+                in a savory egg custard.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$6.75</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img
+                src="https://www.shortstackkitchen.com/wp-content/uploads/2022/10/Cheddar-Bacon-Scones-Blog-15-1.jpg?auto=compress&cs=tinysrgb&w=600"
+                alt="Cheddar Chive Scone" className="w-full h-full object-cover" />
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Cheddar Chive Scone</h3>
+              <p class="menu-item-description">Flaky, buttery scone loaded with sharp cheddar cheese and fresh chives.
+                Served warm.</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$4.50</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="menu-item">
+            <div class="menu-item-image">
+              <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=compress&cs=tinysrgb&w=600"
+                alt="Chocolate Éclair" class="w-full h-full object-cover" />
+            </div>
+            <div class="menu-item-content">
+              <h3 class="menu-item-title">Chocolate Éclair</h3>
+              <p class="menu-item-description">
+                Light choux pastry filled with rich vanilla cream and topped with glossy dark chocolate ganache.
+              </p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$3.95</span>
+                <button class="menu-item-order">Order</button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Coffee Beans Menu Section -->
+    <section id="beans" class="menu-section">
+      <div class="coffee-beans">
+        <h2 class="beans-title">Take Home Our Freshly Roasted Beans</h2>
+
+        <div class="beans-list">
+          <!-- Bean 1 -->
+          <div class="bean-item">
+            <div class="bean-image">
+              <img
+                src="https://images.unsplash.com/photo-1551610290-e153ec567dd8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Ethiopia Yirgacheffe">
+            </div>
+            <div class="bean-content">
+              <h3 class="bean-title">Ethiopia Yirgacheffe</h3>
+              <div class="bean-origin">
+                <svg class="origin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
+                </svg>
+                Ethiopia
+              </div>
+              <div class="bean-notes">
+                <span class="note-tag">Citrus</span>
+                <span class="note-tag">Floral</span>
+                <span class="note-tag">Bright</span>
+              </div>
+              <div class="bean-price">$18.50 / 12oz</div>
+            </div>
+          </div>
+
+          <!-- Bean 2 -->
+          <div class="bean-item">
+            <div class="bean-image">
+              <img
+                src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="Colombia Supremo">
+            </div>
+            <div class="bean-content">
+              <h3 class="bean-title">Colombia Supremo</h3>
+              <div class="bean-origin">
+                <svg class="origin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
+                </svg>
+                Colombia
+              </div>
+              <div class="bean-notes">
+                <span class="note-tag">Chocolate</span>
+                <span class="note-tag">Caramel</span>
+                <span class="note-tag">Nutty</span>
+              </div>
+              <div class="bean-price">$16.75 / 12oz</div>
+            </div>
+          </div>
+
+          <!-- Bean 3 -->
+          <div class="bean-item">
+            <div class="bean-image">
+              <img
+                src="https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
+                alt="Guatemala Antigua Coffee" className="w-full h-full object-cover" />
+            </div>
+            <div class="bean-content">
+              <h3 class="bean-title">Guatemala Antigua</h3>
+              <div class="bean-origin">
+                <svg class="origin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
+                </svg>
+                Guatemala
+              </div>
+              <div class="bean-notes">
+                <span class="note-tag">Spice</span>
+                <span class="note-tag">Cocoa</span>
+                <span class="note-tag">Smooth</span>
+              </div>
+              <div class="bean-price">$17.25 / 12oz</div>
+            </div>
+          </div>
+
+          <!-- Bean 4 -->
+          <div class="bean-item">
+            <div class="bean-image">
+              <img
+                src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="House Blend">
+            </div>
+            <div class="bean-content">
+              <h3 class="bean-title">BrewAura House Blend</h3>
+              <div class="bean-origin">
+                <svg class="origin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
+                </svg>
+                Blend
+              </div>
+              <div class="bean-notes">
+                <span class="note-tag">Balanced</span>
+                <span class="note-tag">Toffee</span>
+                <span class="note-tag">Versatile</span>
+              </div>
+              <div class="bean-price">$15.50 / 12oz</div>
+            </div>
+          </div>
+
+
+
+          <!-- Bean 5 -->
+          <div class="bean-item">
+            <div class="bean-image">
+              <img
+                src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=compress&cs=tinysrgb&w=1350&q=80"
+                alt="Brazil Santos">
+            </div>
+            <div class="bean-content">
+              <h3 class="bean-title">Brazil Santos</h3>
+              <div class="bean-origin">
+                <svg class="origin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
+                </svg>
+                Brazil
+              </div>
+              <div class="bean-notes">
+                <span class="note-tag">Low Acidity</span>
+                <span class="note-tag">Nutty</span>
+                <span class="note-tag">Smooth</span>
+              </div>
+              <div class="bean-price">$15.00 / 12oz</div>
+            </div>
+          </div>
+
+
+
+          <!-- Bean 6 -->
+          <div class="bean-item">
+            <div class="bean-image">
+              <img
+                src="https://cdn.shopify.com/s/files/1/1003/7044/files/panama_geisha_coffee_beans_gesha_coffee_large.jpg?v=1560879458"
+                alt="Panama Geisha">
+            </div>
+            <div class="bean-content">
+              <h3 class="bean-title">Panama Geisha</h3>
+              <div class="bean-origin">
+                <svg class="origin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
+                </svg>
+                Panama
+              </div>
+              <div class="bean-notes">
+                <span class="note-tag">Floral</span>
+                <span class="note-tag">Citrus</span>
+                <span class="note-tag">Silky</span>
+              </div>
+              <div class="bean-price">$28.00 / 8oz</div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Seasonal Special -->
+    <section class="seasonal-special">
+      <div class="seasonal-background">
+        <img src="https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=1350"
+          alt="Seasonal background">
+      </div>
+      <div class="seasonal-content">
+        <div class="seasonal-image">
+          <img src="https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=1350"
+            alt="Maple Bourbon Latte">
+        </div>
+        <div class="seasonal-details">
+          <span class="seasonal-label">Limited Time Offer</span>
+          <h2 class="seasonal-title">Maple Bourbon Latte</h2>
+          <p class="seasonal-text">Our signature espresso blend combined with real maple syrup, a hint of bourbon
+            flavor, and topped with cinnamon-dusted whipped cream. A perfect autumn indulgence.</p>
+          <div class="seasonal-price">$6.75</div>
+          <button class="seasonal-button">Try It Today</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Footer -->
+    <footer class="menu-footer">
+      <div class="footer-content">
+        <p class="allergies-note">Please inform our staff of any allergies or dietary restrictions. We can accommodate
+          most requests with advance notice.</p>
+        <p class="sourcing-note">All our ingredients are sourced from local farmers and producers whenever possible. We
+          proudly support sustainable agriculture.</p>
+      </div>
+    </footer>
+  </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Scroll Indicator -->
+  <div
+    class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-coffee-dark/75 animate-pulse">
+    <span class="text-sm font-medium mb-2">Scroll to explore</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+
+
+
+
+
+  </div>
+
+
+  <script type="module" src="navbar.js"></script>
+  <script type="module" src="model-viewer.js"></script>
+  <script type="module" src="steamcup.js"></script>
+
+  <script type="module" src="about.js"></script>
+  <script type="module" src="menu.js"></script>
+
+
+  <script>
+   const model = document.getElementById('coffee-cup');
+
+// Ensure smooth transitions with will-change for better performance
+model.style.willChange = 'opacity, transform';
+
+// Add event listener for when the model is fully loaded
+model.addEventListener('load', () => {
+  // Apply smooth transitions for opacity and scale with easing
+  model.style.transition = 'opacity 1.2s ease-out, transform 1.2s ease-out';  // Smooth and slightly slower easing for fluidity
+  model.style.opacity = '1';  // Fade in the model
+  model.style.transform = 'scale(1)';  // Scale to normal size
+});
+
+
+  </script>
+</body>
+
+
+
+</html>
